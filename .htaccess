@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /
+RewriteRule \.(jpe?g|gif|ico|png|pcx|exe|dat|bmp|bat|nt|bgi|chr|zip|obj|tpu|mp3|wav|dbf|doc|pdf|7z|gra|snd|pal|mmp|css)$ - [L,NC]
+RewriteRule ^([^i])(.*)$	%{SERVER_ROOT}/index.php?s=$1$2 [L,QSA]

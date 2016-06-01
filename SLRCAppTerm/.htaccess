@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteBase /
+RewriteRule ^([^i])(.*)$	%{SERVER_ROOT}/SLRCAppTerm/index.php?s=$1$2 [L,QSA]
