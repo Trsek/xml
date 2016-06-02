@@ -8,7 +8,7 @@ if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
 	$_GET['sort']='vb';
 	$_GET['search']='';
 	$_GET['f']='';
-	$_GET['mte_a']='edit';
+//	$_GET['mte_a']='edit';
 	$_GET['id']='2';
 }
 
@@ -56,6 +56,11 @@ if( !empty($_REQUEST['reset'])) {
 	}
 	$db = null;
 }
+
+# insert all db from xml files
+if( $_REQUEST['s'] == "update" )
+	require_once (explode('/', DB_NAME)[0] ."/update.php");
+
 
 # tbl define
 $tbl = empty($_REQUEST['tbl'])? "epe": $_REQUEST['tbl']; 
