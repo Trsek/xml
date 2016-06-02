@@ -10,14 +10,14 @@ function modify_date($fe)
 
 # maintenance ruotine
 # put to db again
-if ($handle = opendir(dirname(DB_NAME)))
+if ($handle = opendir(dirname(DB_SLRC_NAME)))
 {
 	while (false !== ($file = readdir($handle)))
 	{
 		if( pathinfo($file, PATHINFO_EXTENSION) == "xml")
 		{
 			$_REQUEST['cm'] = substr($file, 0, 3);
-			$xml = @new SimpleXMLElement(dirname(DB_NAME) .'/' .$file, LIBXML_COMPACT, TRUE);
+			$xml = @new SimpleXMLElement(dirname(DB_SLRC_NAME) .'/' .$file, LIBXML_COMPACT, TRUE);
 			# normallize xml attributes
 			$atts_array = (array) $xml->attributes();
 			$atts_array = $atts_array['@attributes'];
@@ -35,7 +35,7 @@ if ($handle = opendir(dirname(DB_NAME)))
 
 			# database settings:
 			$tabledit = new MySQLtabledit();
-			$tabledit->database_connect_quick(DB_NAME, $_REQUEST['cm']);
+			$tabledit->database_connect_quick(DB_SLRC_NAME, $_REQUEST['cm']);
 			$tabledit->primary_key = "id";
 			# store it
 			$_POST['mte_new_rec'] = "new";

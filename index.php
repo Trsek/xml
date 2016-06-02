@@ -4,15 +4,13 @@ if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
 //	$_REQUEST['reset'] = "1";
 	$_REQUEST['tbl']='epe';
 	$_GET['start']='0';
-	$_GET['ad']='d';
-	$_GET['sort']='vb';
+	$_GET['sort']='pm';
+	$_GET['ad']='a';
 	$_GET['search']='';
 	$_GET['f']='';
 //	$_GET['mte_a']='edit';
 	$_GET['id']='2';
 }
-
-define(DB_NAME, "SLRCAppTerm/data/xmldata.sqlite");
 
 session_start();
 require_once("config.php");
@@ -22,16 +20,16 @@ $tabledit = new MySQLtabledit();
 # need a reset db
 if( !empty($_REQUEST['reset'])) {
 	# zmazeme subor
-	unlink(DB_NAME);
+	unlink(DB_SLRC_NAME);
 
 	# zmazeme xml subory
-	if ($handle = opendir(dirname(DB_NAME)))
+	if ($handle = opendir(dirname(DB_SLRC_NAME)))
 	{
 		while (false !== ($file = readdir($handle)))
 		{
 			if( pathinfo($file, PATHINFO_EXTENSION) == "xml")
 			{
-				$filename = dirname(DB_NAME) .'/' .$file;
+				$filename = dirname(DB_SLRC_NAME) .'/' .$file;
 				if( is_file($filename))
 					unlink($filename);
 			}
@@ -40,7 +38,7 @@ if( !empty($_REQUEST['reset'])) {
 	}
 	
 	# open the database
-	$db = new PDO('sqlite:'. DB_NAME);
+	$db = new PDO('sqlite:'. DB_SLRC_NAME);
 	
 	# create the database tables
 	foreach ($db_fields as $db_tbl_name => $db_tbl_column)
@@ -59,7 +57,7 @@ if( !empty($_REQUEST['reset'])) {
 
 # insert all db from xml files
 if( $_REQUEST['s'] == "update" )
-	require_once (explode('/', DB_NAME)[0] ."/update.php");
+	require_once (explode('/', DB_SLRC_NAME)[0] ."/update.php");
 
 
 # tbl define
@@ -79,7 +77,7 @@ echo "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www
 
 
 # database settings:
-$tabledit->database_connect_quick(DB_NAME, $tbl);
+$tabledit->database_connect_quick(DB_SLRC_NAME, $tbl);
 $tabledit->primary_key = "id";
 $tabledit->fields_required = array("id");
 $tabledit->insert_button("#", "actual (epe)", "tbl=epe");

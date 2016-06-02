@@ -63,7 +63,7 @@ class MySQLtabledit {
 	var $fields_in_list_view;
 
 	# numbers of rows/records in "list view"
-	var $num_rows_list_view = 20;
+	var $num_rows_list_view = 15;
 
 	# required fields in edit or add record
 	var $fields_required;
@@ -116,7 +116,6 @@ class MySQLtabledit {
 		$this->language = 'en';
 		
 		# numbers of rows/records in "list view"
-		$this->num_rows_list_view = 20;
 		$this->width_editor = '100%';
 		$this->width_input_fields = '500px';
 		$this->width_text_fields = '498px';
@@ -174,7 +173,7 @@ class MySQLtabledit {
 		#run via htaccess
 		if(!empty($url_script)) $this->url_script = $url_script;
 
-		echo "<b>table: ". $this->table ."</b><br>";
+		echo "Table: ". $this->table ."<br>";
 		
 		if ($_GET['mte_a'] == 'edit') { 
 			$this->edit_rec(); 
@@ -227,15 +226,23 @@ class MySQLtabledit {
 		
 		// build query_string
 		// query_joomla_component (joomla) 
-		if ($this->query_joomla_component) $query_string = '&option=' . $this->query_joomla_component ;
+		if ($this->query_joomla_component) 
+			$query_string = '&option=' . $this->query_joomla_component ;
+
 		// table name
 		$query_string .= '&tbl=' . $this->table;
+
 		// navigation
-		$query_string .= '&start=' . $start;
+		if( $start > 0 )
+			$query_string .= '&start=' . $start;
+
 		// sorting
-		$query_string .= '&ad=' . $_GET['ad']  . '&sort=' . $_GET['sort'] ;
+		if( !empty($_GET['ad']) || !empty($_GET['sort']))
+			$query_string .= '&ad=' . $_GET['ad']  . '&sort=' . $_GET['sort'] ;
+
 		// searching
-		$query_string .= '&search=' . $_GET['search']  . '&f=' . $_GET['f'] ;
+		if( !empty($_GET['search']) || !empty($_GET['f']))
+			$query_string .= '&search=' . $_GET['search']  . '&f=' . $_GET['f'] ;
 		
 		
 		# search
@@ -256,7 +263,8 @@ class MySQLtabledit {
 		$sql = "SELECT * FROM `$this->table` $where_search $order_by";
 
 		# navigation 2/3
-		$hits_total = $this->db->query($sql)->fetchColumn(); 
+		//$hits_total = $this->db->query($sql)->fetchColumn(); 
+		$hits_total = count($this->db->query($sql)->fetchAll());
 
 		$sql .= " LIMIT $start, $this->num_rows_list_view";
 		$this->values = $this->db->query($sql);

@@ -33,7 +33,6 @@
 	 @file_put_contents($directory. '/xml_http_server_vars.txt', var_export($HTTP_SERVER_VARS, true));
 	 @file_put_contents($directory. '/xml_http_session_vars.txt',var_export($HTTP_SESSION_VARS, true));
 */	
-	define(DB_NAME, "data/xmldata.sqlite");
 	require_once("../config.php");
 	require_once("../db/mte/mte.php");
 	$tabledit = new MySQLtabledit();
