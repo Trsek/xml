@@ -254,10 +254,9 @@ class MySQLtabledit {
 		
 		# select
 		$sql = "SELECT * FROM `$this->table` $where_search $order_by";
-		$this->values = $this->db->query($sql);
 
 		# navigation 2/3
-		$hits_total = count($this->values); 
+		$hits_total = $this->db->query($sql)->fetchColumn(); 
 
 		$sql .= " LIMIT $start, $this->num_rows_list_view";
 		$this->values = $this->db->query($sql);
