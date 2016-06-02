@@ -1,6 +1,7 @@
 <?php
 if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
 {
+	$_REQUEST['s'] = "update";
 //	$_REQUEST['reset'] = "1";
 	$_REQUEST['tbl']='epe';
 	$_GET['start']='0';
@@ -18,46 +19,12 @@ require_once("db/mte/mte.php");
 $tabledit = new MySQLtabledit();
 
 # need a reset db
-if( !empty($_REQUEST['reset'])) {
-	# zmazeme subor
-	unlink(DB_SLRC_NAME);
-
-	# zmazeme xml subory
-	if ($handle = opendir(dirname(DB_SLRC_NAME)))
-	{
-		while (false !== ($file = readdir($handle)))
-		{
-			if( pathinfo($file, PATHINFO_EXTENSION) == "xml")
-			{
-				$filename = dirname(DB_SLRC_NAME) .'/' .$file;
-				if( is_file($filename))
-					unlink($filename);
-			}
-		}
-		closedir($handle);
-	}
+if( !empty($_REQUEST['reset']))
+	require_once ("reset.php");
 	
-	# open the database
-	$db = new PDO('sqlite:'. DB_SLRC_NAME);
-	
-	# create the database tables
-	foreach ($db_fields as $db_tbl_name => $db_tbl_column)
-	{
-		$sql = "CREATE TABLE ". $db_tbl_name ." (id INTEGER PRIMARY KEY";
-		foreach($db_tbl_column as $column)
-		{
-			if( $column != 'id')
-				$sql .= ",". $column ." TEXT"; 
-		}
-		$sql .= ")";
-		$db->exec($sql);
-	}
-	$db = null;
-}
-
 # insert all db from xml files
 if( $_REQUEST['s'] == "update" )
-	require_once (explode('/', DB_SLRC_NAME)[0] ."/update.php");
+	require_once ("update.php");
 
 
 # tbl define
@@ -80,6 +47,7 @@ echo "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www
 $tabledit->database_connect_quick(DB_SLRC_NAME, $tbl);
 $tabledit->primary_key = "id";
 $tabledit->fields_required = array("id");
+$tabledit->chart_column = $db_graph;
 $tabledit->insert_button("#", "actual (epe)", "tbl=epe");
 $tabledit->insert_button("#", "hourly (elc)", "tbl=elc");
 $tabledit->insert_button("#", "daily (etl)", "tbl=etl");
@@ -87,6 +55,10 @@ $tabledit->insert_button("#", "log (rlg)", "tbl=rlg");
 $tabledit->insert_button("#", "reset db", "reset=1");
 $tabledit->do_it( basename(__FILE__));
 $tabledit->database_disconnect();
+
+# bude graf
+if( !empty($_REQUEST['graph']))
+	echo "<div align='center'><img src='graph.php?tbl=".$tbl."&column=".$_REQUEST['graph']."'></div>";
 
 # connection settings
 echo "<br><div align='center'>This server IP is: ". $_SERVER['SERVER_ADDR'] .':'. $_SERVER['SERVER_PORT'] ."</div>";

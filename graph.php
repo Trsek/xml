@@ -28,8 +28,7 @@ $db = null;
 // Create a graph instance
 $graph = new Graph(1200,600);
 $graph->SetScale('intint');
-$graph->title->Set("Graph $column of table $table");
-$graph->xaxis->title->Set('Software by Zdeno Sekerák (c) 2016');
+$graph->xaxis->title->Set("Graph $column of table $table");
 $graph->yaxis->title->Set($column);
 
 // Create the linear plot

@@ -8,6 +8,7 @@ function modify_date($fe)
 	return Date("Y.m.d H:i", $cdate);
 }
 
+$count_update = 0;
 # maintenance ruotine
 # put to db again
 if ($handle = opendir(dirname(DB_SLRC_NAME)))
@@ -26,7 +27,7 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 			$_POST = null;
 			foreach ($db_fields[$_REQUEST['cm']] as $key)
 			{
-				if( $key == "fe")
+				if( in_array($key, $db_time_stamp))
 					$atts_array[$key] = modify_date($atts_array[$key]);
 				
 				if( $key != 'id')
@@ -41,9 +42,13 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 			$_POST['mte_new_rec'] = "new";
 			$tabledit->save_rec_directly();
 			$tabledit->database_disconnect();
+			#
+			$count_update++;
 		}
 	}
 	closedir($handle);
 }
+
+echo "Updated SQL from $count_update xml files.<br>";
 
 ?>

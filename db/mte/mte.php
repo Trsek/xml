@@ -73,6 +73,9 @@ class MySQLtabledit {
 
 	# visible name of the fields
 	var $show_text;
+	
+	# has char icon
+	var $chart_column = array();
 
 	# additional button in menu
 	var $button_menu;
@@ -302,6 +305,10 @@ class MySQLtabledit {
 							if ($_GET['sort'] == $key && $_GET['ad'] == 'd') {
 								$sort_image = "<IMG SRC='$this->url_base/images/sort_d.png' WIDTH=9 HEIGHT=8 BORDER=0 ALT=''>";
 								$ad = 'a';
+							}
+
+							if (in_array($key, $this->chart_column)) {
+								$sort_image .= "<a href='$this->url_script?$query_string&graph=$key'><IMG SRC='$this->url_base/images/chart.png' BORDER=0 ALT=''></a>";
 							}
 
 							// remove sort  and ad and add new ones

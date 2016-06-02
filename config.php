@@ -16,5 +16,8 @@
 			                    'nbu','ipe','npe','c6','h2','n2','co2','pcs','pci','den','db','dn','eh','qb','qn','eb','en',
 			                    'eeh','pm','tm','nt','qbh','qnh','qbl','qnl','ns','pt','fz','imp','tfvb','tfvn','tfe','zeq',
 			                    'dbd','dnd','ehd','ebd','dbm','dnm','ehm','ebm');
+
+	$db_time_stamp     = array('fe','fx','fy','tx','ty','dx','sx','sy');
+	$db_graph          = array('vb','vn','db','dn','qb','qn','pm','tm','ct','eb','en','vx','vy','qx','qy','bx','kx','ky');
 	
 ?>

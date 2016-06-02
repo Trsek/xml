@@ -72,7 +72,7 @@
 	{
 		foreach ($db_fields[$_REQUEST['cm']] as $key)
 		{
-			if( $key == "fe")
+			if( in_array($key, $db_time_stamp))
 				$atts_array[$key] = modify_date($atts_array[$key]);
 			
 			if( $key != 'id')
