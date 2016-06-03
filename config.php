@@ -2,6 +2,8 @@
 	# db filename
 	define(DB_NAME,      "data/xmldata.sqlite");
 	define(DB_SLRC_NAME, "SLRCAppTerm/data/xmldata.sqlite");
+
+	date_default_timezone_set('Europe/Prague');
 	
 	# the fields of db
 	$db_fields = null;
