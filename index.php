@@ -19,11 +19,11 @@ require_once("db/mte/mte.php");
 $tabledit = new MySQLtabledit();
 
 # need a reset db
-if( !empty($_REQUEST['reset']))
+if(( $_REQUEST['s'] == "reset") || isset($_REQUEST['reset']))
 	require_once ("reset.php");
 	
 # insert all db from xml files
-if( $_REQUEST['s'] == "update" )
+if( ($_REQUEST['s'] == "update") || isset($_REQUEST['update']))
 	require_once ("update.php");
 
 
@@ -52,7 +52,8 @@ $tabledit->insert_button("#", "actual (epe)", "tbl=epe");
 $tabledit->insert_button("#", "hourly (elc)", "tbl=elc");
 $tabledit->insert_button("#", "daily (etl)", "tbl=etl");
 $tabledit->insert_button("#", "log (rlg)", "tbl=rlg");
-$tabledit->insert_button("#", "reset db", "reset=1");
+$tabledit->insert_button("#", "(conf)", "tbl=conf");
+$tabledit->insert_button("#", "reset db", "reset");
 $tabledit->do_it( basename(__FILE__));
 $tabledit->database_disconnect();
 

@@ -38,24 +38,26 @@
 	$tabledit = new MySQLtabledit();
 	
 	# config branch
-	if( $_GET['s'] == 'conf' ) {
-		if( $_GET['pr'] == 'hora') {
-			echo Date("Y,m,d,H,i,s");
-			return;
-		}
+	if( $_GET['cm'] == 'conf' ) {
+		# je nutne analyzovat <xml> paket na parameter pr=hora (ale pri conf iny nepoznam, tak davam vzdy cas)
+		echo Date("Y,m,d,H,i,s");
 		return;
 	}
 	
 	# cmdo
-	if( $_GET['s'] == 'cmdo' ) {
+	if( $_GET['cm'] == 'cmdo' ) {
 		header('HTTP/1.1 404 Not Found', true, 404);
 		return;
 	}
 	
 	# data branch epe, etl, elc, rlg
-	$xml_file = 'data/' .$_REQUEST['cm'] .Date("_Ymd_Hi") .'.xml';
-	@file_put_contents($xml_file, $HTTP_RAW_POST_DATA);
+	$por = 0;
+	do {
+	  $xml_file = 'data/' .$_REQUEST['cm'] .Date("_Ymd_His_"). $por++ .'.xml';
+	} while( file_exists($xml_file));
+	
 	try {
+		@file_put_contents($xml_file, $HTTP_RAW_POST_DATA);
 		$xml = @new SimpleXMLElement($xml_file, LIBXML_COMPACT, TRUE);
 	} catch (Exception $e) {
 		# nema to zmysel

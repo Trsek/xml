@@ -17,7 +17,7 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 	{
 		if( pathinfo($file, PATHINFO_EXTENSION) == "xml")
 		{
-			$_REQUEST['cm'] = substr($file, 0, 3);
+			$_REQUEST['cm'] = explode("_", $file)[0];
 			$xml = @new SimpleXMLElement(dirname(DB_SLRC_NAME) .'/' .$file, LIBXML_COMPACT, TRUE);
 			# normallize xml attributes
 			$atts_array = (array) $xml->attributes();
