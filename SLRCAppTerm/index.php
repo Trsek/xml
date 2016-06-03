@@ -60,7 +60,7 @@
 		@file_put_contents($xml_file, $HTTP_RAW_POST_DATA);
 		$xml = @new SimpleXMLElement($xml_file, LIBXML_COMPACT, TRUE);
 	} catch (Exception $e) {
-		# nema to zmysel
+		# nema to zmysel, spadne do HTTP 400
 		$_REQUEST['cm'] = "";
 	}
 	
