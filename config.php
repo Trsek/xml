@@ -22,5 +22,12 @@
 
 	$db_time_stamp     = array('fe','fx','fy','tx','ty','dx','sx','sy');
 	$db_graph          = array('vb','vn','db','dn','qb','qn','pm','tm','ct','eb','en','vx','vy','qx','qy','bx','kx','ky');
+
+	# convert date to human format
+	function modify_date($fe)
+	{
+		$cdate = mktime(substr($fe,5,2), substr($fe,7,2), 0, 1, 1, 2000+substr($fe,0,2), 0) + substr($fe,2,3)*24*60*60;
+		return Date("Y.m.d H:i", $cdate);
+	}
 	
 ?>

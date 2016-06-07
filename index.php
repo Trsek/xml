@@ -1,7 +1,7 @@
 <?php
 if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
 {
-	$_REQUEST['s'] = "update";
+	$_REQUEST['sms'] = "1";
 //	$_REQUEST['reset'] = "1";
 	$_REQUEST['tbl']='epe';
 	$_GET['start']='0';
@@ -25,7 +25,11 @@ if(( $_REQUEST['s'] == "reset") || isset($_REQUEST['reset']))
 # insert all db from xml files
 if( ($_REQUEST['s'] == "update") || isset($_REQUEST['update']))
 	require_once ("update.php");
-
+	
+# import SMS from MyPhoneExplorer Export
+if( ($_REQUEST['s'] == "sms") || isset($_REQUEST['sms']))
+	require_once ("import.php");
+	
 
 # tbl define
 $tbl = empty($_REQUEST['tbl'])? "epe": $_REQUEST['tbl']; 
@@ -52,7 +56,8 @@ $tabledit->insert_button("#", "actual (epe)", "tbl=epe");
 $tabledit->insert_button("#", "hourly (elc)", "tbl=elc");
 $tabledit->insert_button("#", "daily (etl)", "tbl=etl");
 $tabledit->insert_button("#", "log (rlg)", "tbl=rlg");
-$tabledit->insert_button("#", "(conf)", "tbl=conf");
+$tabledit->insert_button("#", "set (conf)", "tbl=conf");
+$tabledit->insert_button("#", "import SMS", "sms");
 $tabledit->insert_button("#", "reset db", "reset");
 $tabledit->do_it( basename(__FILE__));
 $tabledit->database_disconnect();
