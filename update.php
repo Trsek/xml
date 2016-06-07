@@ -2,8 +2,10 @@
 require_once("config.php");
 require_once("db/mte/mte.php");
 
+# maintenance routine
+$tabledit = new MySQLtabledit();
 $count_update = 0;
-# maintenance ruotine
+
 # put to db again
 if ($handle = opendir(dirname(DB_SLRC_NAME)))
 {
@@ -29,19 +31,19 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 			}
 
 			# database settings:
-			$tabledit = new MySQLtabledit();
 			$tabledit->database_connect_quick(DB_SLRC_NAME, $_REQUEST['cm']);
 			$tabledit->primary_key = "id";
 			# store it
 			$_POST['mte_new_rec'] = "new";
 			$tabledit->save_rec_directly();
-			$tabledit->database_disconnect();
 			#
 			$count_update++;
 		}
 	}
 	closedir($handle);
 }
+
+$tabledit->database_disconnect();
 
 echo "Updated SQL from $count_update xml files.<br>";
 
