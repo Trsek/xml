@@ -2,6 +2,7 @@
 xml test framework for contagas
 - framework receive data on http://IP:Port/SLRCAppTerm
 - show incomming data
+- import SMS from XML file which exported from MyPhoneExplorer ver. 1.8.6 (http://www.fjsoft.at/en/)
 
 Parameterization:
 - use SQLite DB
