@@ -15,10 +15,29 @@ function getXMLKey($sms_body)
 		return (string)$xml['fe'];
 	} 
 	catch(Exception $e) {
-//		echo $e->getMessage() ." => (". $sms_body .")<br>";
+//		echo $e->getMessage() ." = ". htmlspecialchars($sms_body, ENT_QUOTES) ."<br>";
 		return "";
 	}
 }
+
+# check if file already exist
+function chekOrGenerFilename($filename)
+{
+	while( file_exists($filename)) {
+		$name = explode(".", basename($filename));
+		$pom  = explode("_", $name[count($name)-2]);
+		# increment or add
+		if( is_numeric($pom[count($pom)-1])) {
+			$pom[count($pom)-1]++;
+		} else {
+			$pom[] = 1;
+		}
+		# merge
+		$name[count($name)-2] = implode("_", $pom); 
+		$filename = dirname($filename). "/". implode(".", $name);
+	}
+	return $filename;
+} 
 
 function xmlFindBase64($znakBase64)
 {
@@ -43,13 +62,34 @@ if( empty($_FILES['xmlfile']['tmp_name'])) {
 	return;
 }
 
-$local_xml = dirname(DB_SLRC_NAME) ."/". $_FILES['xmlfile']['name'];
+$local_xml = chekOrGenerFilename( dirname(DB_SLRC_NAME) ."/". $_FILES['xmlfile']['name']);
 copy($_FILES['xmlfile']['tmp_name'], $local_xml);
 
 $sms = array();
 $sms_split = array();
 
-$xml = new SimpleXMLElement($local_xml, LIBXML_COMPACT, TRUE);
+# parse csv or XML?
+if( strtolower(pathinfo($local_xml, PATHINFO_EXTENSION)) == "csv" )
+{
+	$csv = array_map('str_getcsv', file($local_xml));
+	$xml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><sms></sms>");
+	
+	foreach ($csv as $csv_line)
+	{
+		$xml_child = $xml->addChild("sms");		// $csv_line[0]
+		$xml_child->addChild("from",      $csv_line[2]);
+		$xml_child->addChild("body",      $csv_line[count($csv_line)-1]);
+		$xml_child->addChild("timestamp", $csv_line[5]);
+		$xml_child->addChild("storage",   $csv_line[1]);
+		$xml_child->addChild("nrpdus",    $csv_line[3]);
+		$xml_child->addChild("pdu",       $csv_line[6]);
+	}
+}
+else 
+{
+	$xml = new SimpleXMLElement($local_xml, LIBXML_COMPACT, TRUE);
+}	
+	
 foreach ($xml->sms as $sms_text) 
 {
 	$sms_body = ltrim($sms_text->body[0]);
@@ -117,7 +157,7 @@ foreach ($sms as $sms_body)
 	}
 	catch(Exception $e) {
 		$count_bad++;
-		echo $e->getMessage() ." => (". $sms_body .")<br>";
+		echo $e->getMessage() ." = ". htmlspecialchars($sms_body, ENT_QUOTES) ."<br>";
 		continue;
 	}
 	

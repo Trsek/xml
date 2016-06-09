@@ -2,15 +2,12 @@
 require_once("config.php");
 require_once("db/mte/mte.php");
 
-# zmazeme subor
-unlink(DB_SLRC_NAME);
-
 
 # stored zip files
 $zip = new ZipArchive();
 $zip->open(dirname(DB_SLRC_NAME) ."/". Date("Ymd") .".zip", ZIPARCHIVE::CREATE);
 
-# zmazeme xml subory
+# xml files
 if ($handle = opendir(dirname(DB_SLRC_NAME)))
 {
 	while (false !== ($file = readdir($handle)))
@@ -26,13 +23,22 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 	}
 	closedir($handle);
 }
+# SQL file too?
+if( count($files))
+	$zip->addFile(DB_SLRC_NAME, basename(DB_SLRC_NAME));
+	
 # make it
 $zip->close();
 
 
-# zmazeme xml subory
-foreach ($files as $filename)
-	unlink($filename);
+# remove SQL file
+unlink(DB_SLRC_NAME);
+
+# clear xml files
+if( count($files)) {
+	foreach ($files as $filename)
+		unlink($filename);
+}
 
 
 # open the database
