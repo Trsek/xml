@@ -4,5 +4,5 @@
 /test.xml
 /test.bat
 /test.php
-/SLRCAppTerm/data/data.zip
+/SLRCAppTerm/data/*.zip
 /SLRCAppTerm/data/*.xml
