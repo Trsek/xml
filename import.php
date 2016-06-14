@@ -102,7 +102,7 @@ foreach ($xml->sms as $sms_text)
 	}
 	
 	# remove prefix
-	$sms_body = rtrim($sms_body);
+	$sms_body = $sms_body;
 	$poz = strpos($sms_body, " ");
 	$sms_body = ltrim(substr($sms_body, $poz+1, strlen($sms_body) - $poz));
 		
