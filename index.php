@@ -29,6 +29,12 @@ if( ($_REQUEST['s'] == "update") || isset($_REQUEST['update']))
 # import SMS from MyPhoneExplorer Export
 if( ($_REQUEST['s'] == "sms") || isset($_REQUEST['sms']))
 	require_once ("import.php");
+
+# sort all tables
+if( ($_REQUEST['s'] == "sort") || isset($_REQUEST['sort'])) {
+	require_once ("sort.php");
+	sort_tables();
+}
 	
 
 # tbl define

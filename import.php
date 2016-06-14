@@ -1,5 +1,6 @@
 <?
 require_once("config.php");
+require_once("sort.php");
 require_once("db/mte/mte.php");
 
 if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
@@ -194,6 +195,7 @@ foreach ($sms as $sms_body)
 	$count_update++;
 }
 $tabledit->database_disconnect();
+sort_tables();
 
 echo "Updated SQL from $count_update SMS from file ". $_FILES['xmlfile']['name'] .".<br>";
 if( $count_bad )
