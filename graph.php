@@ -9,7 +9,7 @@ if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
 require_once ("config.php");
 require_once ('jpgraph/jpgraph.php');
 require_once ('jpgraph/jpgraph_line.php');
-require_once( "jpgraph/jpgraph_date.php" );
+require_once ('jpgraph/jpgraph_date.php');
 require_once ('jpgraph/jpgraph_bar.php');
 
 $column = $_REQUEST['column'];

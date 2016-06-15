@@ -197,7 +197,7 @@ foreach ($sms as $sms_body)
 $tabledit->database_disconnect();
 sort_tables();
 
-echo "Updated SQL from $count_update SMS from file ". $_FILES['xmlfile']['name'] .".<br>";
+echo "Updated SQL of $count_update SMS from file ". $_FILES['xmlfile']['name'] .".<br>";
 if( $count_bad )
 	echo "Mistake in '$count_bad' SMS's.<br>"
 ?>
