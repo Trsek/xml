@@ -3,6 +3,48 @@
 	{
 		$_REQUEST["cm" ] = "etl";
 		$HTTP_RAW_POST_DATA = '<etl it="0" um="0" fe="161480400" vb="999545302" vn="1000252536.54" db="144000" dn="128979" pm="0.9889" tm="24.497" ct="1" eb="0" en="0" vx="6001" fx="161482200" vy="5397.87" fy="161480600" qx="6000.0" tx="161480500" qy="5401.2" ty="161480500" bx="5999" dx="161482300" kx="6000.0" sx="161480500" ky="5360.4" sy="161481755" ns="true" fz="false" bt="90.24" bm="99.45" sg="87" pt="14"/>';
+		$HTTP_RAW_POST_DATA = 
+		'<?xml version="1.0" encoding="UTF-8"?>
+		<DevEUI_uplink xmlns="http://uri.actility.com/lora">
+		  <Time>2015-07-09T16:06:38.49+02:00</Time> // timestamp for the packet
+		  <DevEUI>00000000007E074F</DevEUI>
+		  <FPort>2</FPort> //LoRaWAN port number
+		  <FCntUp>11</FCntUp> // the uplink counter for this packet
+		  <ADRbit>1</ADRbit>
+		  <FCntDn>0</FCntDn> // the last downlink counter to the device
+		  <payload_hex>00270000bd00</payload_hex> //LoRaWAN payload in hexa ascii format
+		  <mic_hex>38e7a3b9</mic_hex> // MIC in hexa ascii format
+		  <Lrcid>00000065</Lrcid>
+		  <LrrRSSI>-60.000000</LrrRSSI>
+		  <LrrSNR>9.750000</LrrSNR>
+		  <SpFact>7</SpFact>
+		  <SubBand>G1</SubBand>
+		  <Channel>LC2</Channel>
+		  <DevLrrCnt>3</DevLrrCnt> // number of LRRs which received this packet
+		  <Lrrid>08040059</Lrrid>
+		  <LrrLAT>48.874931</LrrLAT>
+		  <LrrLON>2.333673</LrrLON>
+		  <Lrrs>
+		    <Lrr>
+		      <Lrrid>08040059</Lrrid>
+		      <LrrRSSI>-60.000000</LrrRSSI>
+		      <LrrSNR>9.750000</LrrSNR>
+		    </Lrr>
+		    <Lrr>
+		      <Lrrid>33d13a41</Lrrid>
+		      <LrrRSSI>-73.000000</LrrRSSI>
+		      <LrrSNR>9.750000</LrrSNR>
+		    </Lrr>
+		    <Lrr>
+		      <Lrrid>a74e48b4</Lrrid>
+		      <LrrRSSI>-38.000000</LrrRSSI>
+		      <LrrSNR>9.250000</LrrSNR>
+		    </Lrr>
+		  </Lrrs>
+		  <CustomerID>100000507</CustomerID>
+		  <CustomerData>Customer data</CustomerData> // ascii customer data set by provisioning
+          <ModelCfg>0</ModelCfg>
+        </DevEUI_uplink>';
 	}
 
 	require_once("../config.php");
@@ -22,6 +64,10 @@
 		return;
 	}
 	
+	# Lora modification
+	if( !isset($_REQUEST['cm']))
+		$_REQUEST['cm'] = "lora";
+		
 	# data branch epe, etl, elc, rlg
 	$por = 0;
 	do {
@@ -37,8 +83,14 @@
 	}
 	
 	# normallize xml attributes
-	$atts_array = (array) $xml->attributes();
-	$atts_array = $atts_array['@attributes'];
+	if( $_REQUEST['cm'] == 'lora' ) 
+	{
+		$atts_array = (array) $xml;
+	}
+	else {
+		$atts_array = (array) $xml->attributes();
+		$atts_array = $atts_array['@attributes'];
+	}
 		
 	# add to post
 	$_POST = null;

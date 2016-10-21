@@ -58,6 +58,7 @@ $tabledit->database_connect_quick(DB_SLRC_NAME, $tbl);
 $tabledit->primary_key = "id";
 $tabledit->fields_required = array("id");
 $tabledit->chart_column = $db_graph;
+$tabledit->insert_button("#", "lora", "tbl=lora");
 $tabledit->insert_button("#", "actual (epe)", "tbl=epe");
 $tabledit->insert_button("#", "hourly (elc)", "tbl=elc");
 $tabledit->insert_button("#", "daily (etl)", "tbl=etl");
