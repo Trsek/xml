@@ -115,12 +115,28 @@
 		header('HTTP/1.1 400 Bad Request', true, 400);
 		return;
 	}
-	
+
 	# database settings:
 	$tabledit->database_connect_quick(DB_NAME, $_REQUEST['cm']);
 	$tabledit->primary_key = "id";
-	# store it
-	$_POST['mte_new_rec'] = "new";
-	$tabledit->save_rec_directly();
+	
+	# multiple store
+	if( $xml->DevLrrCnt > 0 ) {
+		for($i=0; $i<$xml->DevLrrCnt; $i++)
+		{
+			$atts_array = (array) $xml->Lrrs->Lrr[$i];
+			foreach ($atts_array as $key => $value) {
+				$_POST['Lrr_'.$key] = $value;
+			}
+			$_POST['mte_new_rec'] = "new";
+			$tabledit->save_rec_directly();
+		}
+	}
+	else {
+		# single store it
+		$_POST['mte_new_rec'] = "new";
+		$tabledit->save_rec_directly();
+	}
+	
 	$tabledit->database_disconnect();
 ?>
