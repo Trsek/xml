@@ -1,8 +1,8 @@
 <?
 	if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
 	{
-		$_REQUEST["cm" ] = "etl";
-		$HTTP_RAW_POST_DATA = '<etl it="0" um="0" fe="161480400" vb="999545302" vn="1000252536.54" db="144000" dn="128979" pm="0.9889" tm="24.497" ct="1" eb="0" en="0" vx="6001" fx="161482200" vy="5397.87" fy="161480600" qx="6000.0" tx="161480500" qy="5401.2" ty="161480500" bx="5999" dx="161482300" kx="6000.0" sx="161480500" ky="5360.4" sy="161481755" ns="true" fz="false" bt="90.24" bm="99.45" sg="87" pt="14"/>';
+//		$_REQUEST["cm" ] = "etl";
+//		$HTTP_RAW_POST_DATA = '<etl it="0" um="0" fe="161480400" vb="999545302" vn="1000252536.54" db="144000" dn="128979" pm="0.9889" tm="24.497" ct="1" eb="0" en="0" vx="6001" fx="161482200" vy="5397.87" fy="161480600" qx="6000.0" tx="161480500" qy="5401.2" ty="161480500" bx="5999" dx="161482300" kx="6000.0" sx="161480500" ky="5360.4" sy="161481755" ns="true" fz="false" bt="90.24" bm="99.45" sg="87" pt="14"/>';
 		$HTTP_RAW_POST_DATA = 
 		'<?xml version="1.0" encoding="UTF-8"?>
 		<DevEUI_uplink xmlns="http://uri.actility.com/lora">
@@ -83,14 +83,12 @@
 	}
 	
 	# normallize xml attributes
-	if( $_REQUEST['cm'] == 'lora' ) 
-	{
+	$atts_array = (array) $xml->attributes();
+	$atts_array = $atts_array['@attributes'];
+	
+	# propably lora
+	if( empty($atts_array))
 		$atts_array = (array) $xml;
-	}
-	else {
-		$atts_array = (array) $xml->attributes();
-		$atts_array = $atts_array['@attributes'];
-	}
 		
 	# add to post
 	$_POST = null;
@@ -100,7 +98,10 @@
 		{
 			if( in_array($key, $db_time_stamp))
 				$atts_array[$key] = modify_date($atts_array[$key]);
-			
+
+			if( $key == 'Time')
+				$_POST['fe'] = modify_lora_date($atts_array[$key]);
+				
 			if( $key != 'id')
 				$_POST[$key] = $atts_array[$key];
 		}
