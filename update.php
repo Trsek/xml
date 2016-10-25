@@ -14,17 +14,28 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 		if( pathinfo($file, PATHINFO_EXTENSION) == "xml")
 		{
 			$_REQUEST['cm'] = explode("_", $file)[0];
-			$xml = @new SimpleXMLElement(dirname(DB_SLRC_NAME) .'/' .$file, LIBXML_COMPACT, TRUE);
+			try {
+				$xml = @new SimpleXMLElement(dirname(DB_SLRC_NAME) .'/' .$file, LIBXML_COMPACT, TRUE);
+			}
+			catch(Exception $e) {
+				continue;					
+			}
 			# normallize xml attributes
 			$atts_array = (array) $xml->attributes();
 			$atts_array = $atts_array['@attributes'];
-	
+			# propably lora
+			if( empty($atts_array))
+				$atts_array = (array) $xml;
+					
 			# add to post
 			$_POST = null;
 			foreach ($db_fields[$_REQUEST['cm']] as $key)
 			{
 				if( in_array($key, $db_time_stamp))
 					$atts_array[$key] = modify_date($atts_array[$key]);
+
+				if( $key == 'Time')
+					$_POST['fe'] = modify_lora_date($atts_array[$key]);
 				
 				if( $key != 'id')
 					$_POST[$key] = $atts_array[$key];
@@ -33,9 +44,28 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 			# database settings:
 			$tabledit->database_connect_quick(DB_SLRC_NAME, $_REQUEST['cm']);
 			$tabledit->primary_key = "id";
-			# store it
-			$_POST['mte_new_rec'] = "new";
-			$tabledit->save_rec_directly();
+			
+			# multiple store
+			if( $xml->DevLrrCnt > 0 ) {
+				for($i=0; $i<$xml->DevLrrCnt; $i++)
+				{
+					$atts_array = (array) $xml->Lrrs->Lrr[$i];
+					foreach ($atts_array as $key => $value) 
+					{
+						if( in_array('Lrr_'.$key, $db_fields[$_REQUEST['cm']])) {
+							$_POST['Lrr_'.$key] = $value;
+						}
+					}
+					$_POST['mte_new_rec'] = "new";
+					$tabledit->save_rec_directly();
+				}
+			}
+			else {
+				# single store it
+				$_POST['mte_new_rec'] = "new";
+				$tabledit->save_rec_directly();
+			}
+			
 			#
 			$count_update++;
 		}
