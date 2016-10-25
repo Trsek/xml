@@ -38,7 +38,7 @@ if( ($_REQUEST['s'] == "sort") || isset($_REQUEST['sort'])) {
 	
 
 # tbl define
-$tbl = empty($_REQUEST['tbl'])? "epe": $_REQUEST['tbl']; 
+$tbl = empty($_REQUEST['tbl'])? "lora": $_REQUEST['tbl']; 
 
 # the fields you want to see in "list view"
 $tabledit->fields_in_list_view = $db_fields[$tbl];

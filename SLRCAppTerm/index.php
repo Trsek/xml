@@ -6,45 +6,40 @@
 		$HTTP_RAW_POST_DATA = 
 		'<?xml version="1.0" encoding="UTF-8"?>
 		<DevEUI_uplink xmlns="http://uri.actility.com/lora">
-		  <Time>2015-07-09T16:06:38.49+02:00</Time> // timestamp for the packet
-		  <DevEUI>00000000007E074F</DevEUI>
-		  <FPort>2</FPort> //LoRaWAN port number
-		  <FCntUp>11</FCntUp> // the uplink counter for this packet
-		  <ADRbit>1</ADRbit>
-		  <FCntDn>0</FCntDn> // the last downlink counter to the device
-		  <payload_hex>00270000bd00</payload_hex> //LoRaWAN payload in hexa ascii format
-		  <mic_hex>38e7a3b9</mic_hex> // MIC in hexa ascii format
-		  <Lrcid>00000065</Lrcid>
-		  <LrrRSSI>-60.000000</LrrRSSI>
-		  <LrrSNR>9.750000</LrrSNR>
-		  <SpFact>7</SpFact>
-		  <SubBand>G1</SubBand>
-		  <Channel>LC2</Channel>
-		  <DevLrrCnt>3</DevLrrCnt> // number of LRRs which received this packet
-		  <Lrrid>08040059</Lrrid>
-		  <LrrLAT>48.874931</LrrLAT>
-		  <LrrLON>2.333673</LrrLON>
-		  <Lrrs>
-		    <Lrr>
-		      <Lrrid>08040059</Lrrid>
-		      <LrrRSSI>-60.000000</LrrRSSI>
-		      <LrrSNR>9.750000</LrrSNR>
-		    </Lrr>
-		    <Lrr>
-		      <Lrrid>33d13a41</Lrrid>
-		      <LrrRSSI>-73.000000</LrrRSSI>
-		      <LrrSNR>9.750000</LrrSNR>
-		    </Lrr>
-		    <Lrr>
-		      <Lrrid>a74e48b4</Lrrid>
-		      <LrrRSSI>-38.000000</LrrRSSI>
-		      <LrrSNR>9.250000</LrrSNR>
-		    </Lrr>
-		  </Lrrs>
-		  <CustomerID>100000507</CustomerID>
-		  <CustomerData>Customer data</CustomerData> // ascii customer data set by provisioning
-          <ModelCfg>0</ModelCfg>
-        </DevEUI_uplink>';
+		  <Time>2016-10-25T12:45:24.150+02:00</Time>
+			<DevEUI>0004A30B001AB111</DevEUI>
+			<FPort>1</FPort>
+			<FCntUp>9</FCntUp>
+			<ADRbit>1</ADRbit>
+			<MType>4</MType>
+			<FCntDn>5</FCntDn>
+			<payload_hex>28</payload_hex>
+			<mic_hex>4368e1a6</mic_hex>
+			<Lrcid>00000201</Lrcid>
+			<LrrRSSI>-117.000000</LrrRSSI>
+			<LrrSNR>-14.750000</LrrSNR>
+			<SpFact>12</SpFact>
+			<SubBand>G2</SubBand>
+			<Channel>LC6</Channel>
+			<DevLrrCnt>1</DevLrrCnt>
+			<Lrrid>290000D5</Lrrid>
+			<Late>0</Late>
+			<LrrLAT>50.039040</LrrLAT>
+			<LrrLON>15.767958</LrrLON>
+			<Lrrs>
+			  <Lrr>
+			   <Lrrid>290000D5</Lrrid>
+			   <Chain>0</Chain>
+			   <LrrRSSI>-117.000000</LrrRSSI>
+			   <LrrSNR>-14.750000</LrrSNR>
+			   <LrrESP>-131.893097</LrrESP>
+			  </Lrr>
+			</Lrrs>
+			<CustomerID>100000301</CustomerID>
+			<CustomerData>{"alr":{"pro":"LORA/Generic","ver":"1"}}</CustomerData>
+			<ModelCfg>0</ModelCfg>
+			<DevAddr>001AB111</DevAddr>
+		</DevEUI_uplink>';
 	}
 
 	require_once("../config.php");
@@ -125,8 +120,11 @@
 		for($i=0; $i<$xml->DevLrrCnt; $i++)
 		{
 			$atts_array = (array) $xml->Lrrs->Lrr[$i];
-			foreach ($atts_array as $key => $value) {
-				$_POST['Lrr_'.$key] = $value;
+			foreach ($atts_array as $key => $value) 
+			{
+				if( in_array('Lrr_'.$key, $db_fields[$_REQUEST['cm']])) {
+					$_POST['Lrr_'.$key] = $value;
+				}
 			}
 			$_POST['mte_new_rec'] = "new";
 			$tabledit->save_rec_directly();
