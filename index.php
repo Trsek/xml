@@ -36,6 +36,10 @@ if( ($_REQUEST['s'] == "sort") || isset($_REQUEST['sort'])) {
 	sort_tables();
 }
 	
+# autorefresh
+if( isset($_REQUEST['autorefresh'])) {
+	header("Refresh: 7; URL=". $_SERVER['REQUEST_URI']);
+}
 
 # tbl define
 $tbl = empty($_REQUEST['tbl'])? "lora": $_REQUEST['tbl']; 
@@ -72,6 +76,11 @@ $tabledit->database_disconnect();
 # bude graf
 if( !empty($_REQUEST['graph']))
 	echo "<div align='center'><img src='graph.php?tbl=".$tbl."&column=".$_REQUEST['graph']."'></div>";
+
+# autorefresh
+echo '<form method="GET" action="?"><div align="right">
+	<input type="checkbox" name="autorefresh" '. (!empty($_REQUEST['autorefresh'])? 'checked':'') .' onchange="this.form.submit()">autorefresh
+	</div></form>';
 
 # connection settings
 echo "<br><div align='center'>This server IP is: ". $_SERVER['SERVER_ADDR'] .':'. $_SERVER['SERVER_PORT'] ."</div>";
