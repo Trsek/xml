@@ -1,9 +1,9 @@
 <?php
 if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
 {
-	$_REQUEST['sms'] = "1";
+//	$_REQUEST['sms'] = "1";
 //	$_REQUEST['reset'] = "1";
-	$_REQUEST['tbl']='epe';
+	$_REQUEST['tbl']='lora';
 	$_GET['start']='0';
 	$_GET['sort']='pm';
 	$_GET['ad']='a';

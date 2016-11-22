@@ -1,4 +1,6 @@
 <?
+	require_once("payload_elgas.php");
+
 	# db filename
 	define(DB_NAME,      "data/xmldata.sqlite");
 	define(DB_SLRC_NAME, "SLRCAppTerm/data/xmldata.sqlite");
@@ -26,6 +28,10 @@
 	$db_time_stamp     = array('fe','fx','fy','tx','ty','dx','sx','sy');
 	$db_graph          = array('vb','vn','db','dn','qb','qn','pm','tm','ct','eb','en','vx','vy','qx','qy','bx','kx','ky','LrrRSSI','LrrSNR','SpFact','Lrrid','LrrLAT','LrrLON','Lrr_Lrrid','Lrr_LrrRSSI','Lrr_LrrSNR','Lrr_Chain','Lrr_LrrESP');
 
+	# modify lora payload_hex
+	$db_fields['lora'] = payload_added($db_fields['lora']);
+	$db_graph = payload_added_graph($db_graph);
+	
 	# convert date to human format
 	function modify_date($fe)
 	{

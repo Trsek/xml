@@ -13,7 +13,7 @@
 			<ADRbit>1</ADRbit>
 			<MType>4</MType>
 			<FCntDn>5</FCntDn>
-			<payload_hex>28</payload_hex>
+			<payload_hex>014964656e7469665374616e6963650000e041be1f719999999919564071999999991956407199999999195640fee400009892</payload_hex>
 			<mic_hex>4368e1a6</mic_hex>
 			<Lrcid>00000201</Lrcid>
 			<LrrRSSI>-117.000000</LrrRSSI>
@@ -84,6 +84,12 @@
 	# propably lora
 	if( empty($atts_array))
 		$atts_array = (array) $xml;
+
+	# special parsing for elgas payload
+	if( !empty($atts_array['payload_hex'])) {
+		foreach(payload_elgas($atts_array['payload_hex']) as $payload_key => $payload_value)
+			$atts_array[$payload_key] = $payload_value;
+	}
 		
 	# add to post
 	$_POST = null;
