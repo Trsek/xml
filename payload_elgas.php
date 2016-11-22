@@ -79,6 +79,10 @@ function payload_elgas($pay_value)
 	empty($value);
 	foreach($payload_elgas as $pay)
 	{
+		# not more
+		if( 2*$pay[PAY_LEN] > strlen($pay_value))
+			break;
+			
 		switch ($pay[PAY_TYPE])
 		{
 			case Uchar:

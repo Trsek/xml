@@ -23,10 +23,17 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 			# normallize xml attributes
 			$atts_array = (array) $xml->attributes();
 			$atts_array = $atts_array['@attributes'];
+
 			# propably lora
 			if( empty($atts_array))
 				$atts_array = (array) $xml;
-					
+
+			# special parsing for elgas payload
+			if( !empty($atts_array['payload_hex'])) {
+				foreach(payload_elgas($atts_array['payload_hex']) as $payload_key => $payload_value)
+					$atts_array[$payload_key] = $payload_value;
+			}
+				
 			# add to post
 			$_POST = null;
 			foreach ($db_fields[$_REQUEST['cm']] as $key)
