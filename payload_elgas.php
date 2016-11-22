@@ -1,13 +1,14 @@
 <?php
 # special payload parser for Elgas
 
-	define(Uchar,  0);
-	define(Ulong,  1);
-	define(Double, 2);
-	define(Ushort, 3);
-	define(String, 4);
-	define(Hex,    5);
-
+	define(tUchar,   0);
+	define(tUlong,   1);
+	define(tDouble,  2);
+	define(tUshort,  3);
+	define(tString,  4);
+	define(tHex,     5);
+	define(tPercent, 6);
+	
 	define(PAY_NAME, 0);
 	define(PAY_LEN,  1);
 	define(PAY_TYPE, 2);
@@ -15,17 +16,17 @@
 	define(DATEOFFSET1970, 946684800);
 
 	$payload_elgas = array(
-		array('Message_Type',   1, Uchar),
-		array('ID_device',     16, String),
-		array('TimeStamp',      4, Ulong),		// seconds from 1.1.2000
-		array('Vm_t',           8, Double),
-		array('Vm_t_1',         8, Double),
-		array('Vm_t_2',         8, Double),
-		array('Battery_device', 1, Uchar),
-		array('Battery_modem',  1, Uchar),
-		array('RSSI',           1, Uchar),
-		array('Resserved',      1, Uchar),
-		array('CRC_modbus',     2, Hex)
+		array('Message_Type',   1, tUchar),
+		array('ID_device',     16, tString),
+		array('TimeStamp',      4, tUlong),		// seconds from 1.1.2000
+		array('Vm_t',           8, tDouble),
+		array('Vm_t_1',         8, tDouble),
+		array('Vm_t_2',         8, tDouble),
+		array('Battery_device', 1, tPercent),
+		array('Battery_modem',  1, tPercent),
+		array('RSSI',           1, tPercent),
+		array('Resserved',      1, tUchar),
+		array('CRC_modbus',     2, tHex)
 	);
 
 	$payload_graph = array('Vm_t', 'Vm_t_1', 'Vm_t_2', 'Battery_device', 'Battery_modem', 'RSSI');
@@ -85,22 +86,25 @@ function payload_elgas($pay_value)
 			
 		switch ($pay[PAY_TYPE])
 		{
-			case Uchar:
+			case tUchar:
 				$value[ $pay[PAY_NAME]] = hexdec(substr($pay_value, 0, 2*$pay[PAY_LEN]));
 				break;
-			case Ulong:
+			case tUlong:
 				$value[ $pay[PAY_NAME]] = unpack("L", pack('H*',substr($pay_value, 0, 2*$pay[PAY_LEN])))[1];
 				break;
-			case Ushort:
+			case tUshort:
 				$value[ $pay[PAY_NAME]] = hexdec(substr($pay_value, 0, 2*$pay[PAY_LEN]));
 				break;
-			case Double:
+			case tDouble:
 				$value[ $pay[PAY_NAME]] = unpack("d", pack('H*',substr($pay_value, 0, 2*$pay[PAY_LEN])))[1];
 				break;
-			case String:
+			case tString:
 				$value[ $pay[PAY_NAME]] = trim(hex2bin(substr($pay_value, 0, 2*$pay[PAY_LEN])));
 				break;
-			case Hex:
+			case tPercent:
+				$value[ $pay[PAY_NAME]] = sprintf('%.2f', hexdec(substr($pay_value, 0, 2*$pay[PAY_LEN])) / 2.55);
+				break;
+			case tHex:
 			default:
 				$value[ $pay[PAY_NAME]] = substr($pay_value, 0, 2*$pay[PAY_LEN]);
 				break;
