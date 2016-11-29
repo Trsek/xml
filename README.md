@@ -10,3 +10,6 @@ Parameterization:
 - use SQLite DB
 - configuration of DB is in config.php
 - https://github.com/Trsek/xml/blob/master/XML_screenshot.png, https://github.com/Trsek/xml/blob/master/XML_screenshot_graph.png show example
+
+Added LoRa protocol:
+- https://www.lora-alliance.org/what-is-lora/technology
