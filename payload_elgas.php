@@ -20,16 +20,13 @@
 		array('ID_device',     16, tString),
 		array('TimeStamp',      4, tUlong),		// seconds from 1.1.2000
 		array('Vm_t',           8, tDouble),
-		array('Vm_t_1',         8, tDouble),
-		array('Vm_t_2',         8, tDouble),
 		array('Battery_device', 1, tPercent),
 		array('Battery_modem',  1, tPercent),
-		array('RSSI',           1, tPercent),
-		array('Resserved',      1, tUchar),
+		array('Resserved',      3, tUchar),
 		array('CRC_modbus',     2, tHex)
 	);
 
-	$payload_graph = array('Vm_t', 'Vm_t_1', 'Vm_t_2', 'Battery_device', 'Battery_modem', 'RSSI');
+	$payload_graph = array('Vm_t', 'Battery_device', 'Battery_modem');
 	
 # replace column in lora table
 function payload_added($fields)
