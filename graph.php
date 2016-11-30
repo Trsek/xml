@@ -21,8 +21,10 @@ $values = $db->query("SELECT fe, $column FROM $table ORDER BY fe");
 $ydata = array();
 if (count($values)>0) {
 	foreach ($values as $rij) {
-		$xdata[] = $rij['fe'];
-		$ydata[] = $rij[$column];
+		if( is_numeric($rij[$column])) {
+			$xdata[] = $rij['fe'];
+			$ydata[] = $rij[$column];
+		}
 	}
 }
 $db = null;
