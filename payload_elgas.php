@@ -88,12 +88,13 @@ function payload_elgas($pay_value)
 				$value[ $pay[PAY_NAME]] = hexdec(substr($pay_value, 0, 2*$pay[PAY_LEN]));
 				break;
 			case tUlong:
-				$value[ $pay[PAY_NAME]] = unpack("L", pack('H*',substr($pay_value, 0, 2*$pay[PAY_LEN])))[1];
+				$value[ $pay[PAY_NAME]] = unpack("N", pack('H*',substr($pay_value, 0, 2*$pay[PAY_LEN])))[1];
 				break;
 			case tUshort:
 				$value[ $pay[PAY_NAME]] = hexdec(substr($pay_value, 0, 2*$pay[PAY_LEN]));
 				break;
 			case tDouble:
+				// TODO need rot order
 				$value[ $pay[PAY_NAME]] = unpack("d", pack('H*',substr($pay_value, 0, 2*$pay[PAY_LEN])))[1];
 				break;
 			case tString:
