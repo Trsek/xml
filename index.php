@@ -35,6 +35,10 @@ if( ($_REQUEST['s'] == "sort") || isset($_REQUEST['sort'])) {
 	require_once ("sort.php");
 	sort_tables();
 }
+
+# pocet zaznamov na jednej strane
+if( isset($_REQUEST['count']))
+	$tabledit->num_rows_list_view = $_REQUEST['count'];
 	
 # autorefresh
 if( isset($_REQUEST['autorefresh'])) {
