@@ -360,7 +360,7 @@ class MySQLtabledit {
 		}
 		else {$tot = $last_page; }
 
-
+		$tbl_count = isset($_GET['count'])? '&count='.$_GET['count']:"";
 		for ($f=$vanaf;$f<=$tot;$f++) {
 
 			$nav_toon = $this->num_rows_list_view * ($f-1);
@@ -369,7 +369,7 @@ class MySQLtabledit {
 				$navigation .= "<td class='mte_nav' style='color:#fff;background: #808080;font-weight: bold'>$f</td> "; 
 			}
 			else {
-				$navigation .= "<td class='mte_nav' style='background: #fff'><A HREF='$this->url_script?$query_nav&start=$nav_toon'>$f</A></td>"; 
+				$navigation .= "<td class='mte_nav' style='background: #fff'><A HREF='$this->url_script?$query_nav&start=$nav_toon$tbl_count'>$f</A></td>"; 
 			}
 		}
 		if ($hits_total<$this->num_rows_list_view) { $navigation = '';}
