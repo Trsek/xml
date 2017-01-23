@@ -19,7 +19,7 @@ require_once("db/mte/mte.php");
 $tabledit = new MySQLtabledit();
 
 # need a reset db
-if(( $_REQUEST['s'] == "reset") || isset($_REQUEST['reset']))
+if((( $_REQUEST['s'] == "reset") || isset($_REQUEST['reset'])) && ($_SERVER['SERVER_NAME'] != WEB_DISABLE_RESET))
 	require_once ("reset.php");
 	
 # insert all db from xml files
@@ -89,7 +89,7 @@ echo '<form method="GET" action="?"><div align="right">
 # connection settings
 echo "<br><div align='center'>This server IP is: ". $_SERVER['SERVER_ADDR'] .':'. $_SERVER['SERVER_PORT'] ."</div>";
 echo "
-	<div align='center'>Software by Zdeno Sekerak (c) 2016</div>
+	<div align='center'>Software by Zdeno Sekerak (c) 2017</div>
 	</body>
 	</html>"
 	;
