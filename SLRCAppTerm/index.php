@@ -40,10 +40,12 @@
 			<ModelCfg>0</ModelCfg>
 			<DevAddr>001AB111</DevAddr>
 		</DevEUI_uplink>';
+		$HTTP_RAW_POST_DATA = '{"cmd":"gw","EUI":"0004A30B001C2189","ts":1485259823365,"fcnt":2,"port":1,"freq":867700000,"toa":2301,"dr":"SF12 BW125 4/5","ack":false,"gws":[{"rssi":-59,"snr":8.2,"ts":1485259823365,"gweui":"024B08FFFF0503C9","lat":50.0617701,"lon":15.7537326}],"data":"015069636f446174636f6d303132360000201a0c500000000000000000fdfd0000007af5"}';
 	}
 
 	require_once("../config.php");
 	require_once("../db/mte/mte.php");
+	require_once("../json.php");
 	$tabledit = new MySQLtabledit();
 	
 	# config branch
@@ -68,6 +70,12 @@
 	do {
 	  $xml_file = 'data/' .$_REQUEST['cm'] .Date("_Ymd_His_"). $por++ .'.xml';
 	} while( file_exists($xml_file));
+
+	# JSON modification
+	if( isJson($HTTP_RAW_POST_DATA)) {
+		@file_put_contents(str_replace('.xml', '.json', $xml_file), $HTTP_RAW_POST_DATA);
+		$HTTP_RAW_POST_DATA = array2xml(json_decode($HTTP_RAW_POST_DATA));
+	}
 	
 	try {
 		@file_put_contents($xml_file, $HTTP_RAW_POST_DATA);
@@ -121,7 +129,7 @@
 	$tabledit->database_connect_quick(DB_NAME, $_REQUEST['cm']);
 	$tabledit->primary_key = "id";
 	
-	# multiple store
+	# multiple store xml
 	if( $xml->DevLrrCnt > 0 ) {
 		for($i=0; $i<$xml->DevLrrCnt; $i++)
 		{
@@ -132,15 +140,23 @@
 					$_POST['Lrr_'.$key] = $value;
 				}
 			}
-			$_POST['mte_new_rec'] = "new";
-			$tabledit->save_rec_directly();
 		}
 	}
-	else {
-		# single store it
-		$_POST['mte_new_rec'] = "new";
-		$tabledit->save_rec_directly();
+
+	# multiple store json
+	if( isset($xml->gws)) {
+		$atts_array = (array) $xml->gws;
+		foreach ($atts_array as $key => $value)
+		{
+			if( in_array($key, $db_fields[$_REQUEST['cm']])) {
+				$_POST[$key] = $value;
+			}
+		}
 	}
+	
+	# store it
+	$_POST['mte_new_rec'] = "new";
+	$tabledit->save_rec_directly();
 	
 	$tabledit->database_disconnect();
 ?>
