@@ -24,13 +24,13 @@
 	$db_fields['conf'] = array( 'id','it','pr');
 	$db_fields['rcm']  = array( 'id','ic','es');
 	
-	$db_fields['lora'] = array( 'id','fe','Time','DevEUI','FPort','FCntUp','ADRbit','FCntDn','payload_hex','mic_hex','Lrcid','LrrRSSI','LrrSNR','SpFact','SubBand','Channel','DevLrrCnt','Lrrid','LrrLAT','LrrLON','Lrr_Lrrid','Lrr_LrrRSSI','Lrr_LrrSNR','Lrr_Chain','Lrr_LrrESP','CustomerID','CustomerData','ModelCfg' );
+	$db_fields['lora'] = array( 'id','fe','Time','DevEUI','FPort','FCntUp','ADRbit','FCntDn','ACK','payload_hex','mic_hex','Lrcid','LrrRSSI','LrrSNR','SpFact','SubBand','Channel','DevLrrCnt','Lrrid','LrrLAT','LrrLON','Lrr_Lrrid','Lrr_LrrRSSI','Lrr_LrrSNR','Lrr_Chain','Lrr_LrrESP','CustomerID','CustomerData','ModelCfg' );
 	
 	$db_time_stamp     = array('fe','fx','fy','tx','ty','dx','sx','sy');
 	$db_graph          = array('vb','vn','db','dn','qb','qn','pm','tm','ct','eb','en','vx','vy','qx','qy','bx','kx','ky','LrrRSSI','LrrSNR','SpFact','Lrrid','LrrLAT','LrrLON','Lrr_Lrrid','Lrr_LrrRSSI','Lrr_LrrSNR','Lrr_Chain','Lrr_LrrESP');
 
 	# convert json to xml
-	$map_fields        = array( 'ts' => 'Time', 'EUI' => 'DevEUI', 'port' => 'FPort', 'fcnt' => 'FCntUp', 'data' => 'payload_hex', 'rssi' => 'LrrRSSI', 'snr' => 'LrrSNR', 'lat' => 'LrrLAT', 'lon' => 'LrrLON');
+	$map_fields        = array( 'ts' => 'Time', 'EUI' => 'DevEUI', 'port' => 'FPort', 'fcnt' => 'FCntUp', 'data' => 'payload_hex', 'rssi' => 'LrrRSSI', 'snr' => 'LrrSNR', 'lat' => 'LrrLAT', 'lon' => 'LrrLON', 'freq' => 'Channel', 'dr' => 'SpFact');
 	
 	# modify lora payload_hex
 	$db_fields['lora'] = payload_added($db_fields['lora']);
