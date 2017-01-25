@@ -28,7 +28,12 @@ function array2xml($array, $xml = false)
 		if( is_array($value))
 			array2xml($value[0], $xml->addChild($key));
 		else
+		{
+			if( is_bool($value))
+				$value = $value? "true": "false";
+
 			$xml->addChild($key, $value);
+		}
 	}
 
 	return $xml->asXML();

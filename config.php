@@ -24,7 +24,7 @@
 	$db_fields['conf'] = array( 'id','it','pr');
 	$db_fields['rcm']  = array( 'id','ic','es');
 	
-	$db_fields['lora'] = array( 'id','fe','Time','DevEUI','FPort','FCntUp','ADRbit','FCntDn','ACK','payload_hex','mic_hex','Lrcid','LrrRSSI','LrrSNR','SpFact','SubBand','Channel','DevLrrCnt','Lrrid','LrrLAT','LrrLON','Lrr_Lrrid','Lrr_LrrRSSI','Lrr_LrrSNR','Lrr_Chain','Lrr_LrrESP','CustomerID','CustomerData','ModelCfg' );
+	$db_fields['lora'] = array( 'id','fe','Time','DevEUI','FPort','FCntUp','ADRbit','FCntDn','ack','payload_hex','mic_hex','Lrcid','LrrRSSI','LrrSNR','SpFact','SubBand','Channel','DevLrrCnt','Lrrid','LrrLAT','LrrLON','Lrr_Lrrid','Lrr_LrrRSSI','Lrr_LrrSNR','Lrr_Chain','Lrr_LrrESP','CustomerID','CustomerData','ModelCfg' );
 	
 	$db_time_stamp     = array('fe','fx','fy','tx','ty','dx','sx','sy');
 	$db_graph          = array('vb','vn','db','dn','qb','qn','pm','tm','ct','eb','en','vx','vy','qx','qy','bx','kx','ky','LrrRSSI','LrrSNR','SpFact','Lrrid','LrrLAT','LrrLON','Lrr_Lrrid','Lrr_LrrRSSI','Lrr_LrrSNR','Lrr_Chain','Lrr_LrrESP');

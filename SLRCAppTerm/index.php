@@ -155,6 +155,7 @@
 	}
 	
 	# store it
+	unset($_POST['id']);
 	$_POST['mte_new_rec'] = "new";
 	$tabledit->save_rec_directly();
 	
