@@ -50,7 +50,7 @@
 		# miliseconds unix time
 		if( $cdate == false ) {
 			$militime = DateTime::createFromFormat('U.u', $time/1000);
-			return $militime->format("m-d-Y H:i:s.u");
+			return $militime->format("Y.m.d H:i:s.u");
 		}
 		return Date("Y.m.d H:i:s", $cdate);
 	}
