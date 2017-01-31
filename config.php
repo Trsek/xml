@@ -50,6 +50,7 @@
 		# miliseconds unix time
 		if( $cdate == false ) {
 			$militime = DateTime::createFromFormat('U.u', $time/1000);
+			$militime->setTimezone(new DateTimeZone(date_default_timezone_get())); 
 			return $militime->format("Y.m.d H:i:s.u");
 		}
 		return Date("Y.m.d H:i:s", $cdate);

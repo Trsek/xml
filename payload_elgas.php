@@ -109,8 +109,11 @@ function payload_elgas($pay_value)
 				break;
 		}
 		//
-		if( $pay[PAY_NAME] == 'TimeStamp' )
-			$value[ $pay[PAY_NAME]] = Date("Y.m.d H:i:s", $value[ $pay[PAY_NAME]] + DATEOFFSET1970);
+		if( $pay[PAY_NAME] == 'TimeStamp' ) {
+			$time = DateTime::createFromFormat('U', $value[ $pay[PAY_NAME]] + DATEOFFSET1970);
+//			$time->setTimezone(new DateTimeZone(date_default_timezone_get()));
+			$value[ $pay[PAY_NAME]] = $time->format("Y.m.d H:i:s");
+		}
 
 		// cut first n-bytes
 		$pay_value = substr($pay_value, 2*$pay[PAY_LEN], strlen($pay_value) - 2*$pay[PAY_LEN]);
