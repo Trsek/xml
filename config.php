@@ -31,6 +31,15 @@
 
 	# convert json to xml
 	$map_fields        = array( 'ts' => 'Time', 'EUI' => 'DevEUI', 'port' => 'FPort', 'fcnt' => 'FCntUp', 'data' => 'payload_hex', 'rssi' => 'LrrRSSI', 'snr' => 'LrrSNR', 'lat' => 'LrrLAT', 'lon' => 'LrrLON', 'freq' => 'Channel', 'dr' => 'SpFact');
+
+	# cast for sql where
+	$db_fields_cast['lora'] = array( 
+	//	'fe' => DATETIME,'Time' => DATETIME, 'TimeStamp' => DATETIME,
+		'FPort' => DECIMAL,'FCntUp' => DECIMAL,'ADRbit' => DECIMAL,'FCntDn' => DECIMAL,'Message_Type' => DECIMAL,
+		'Lrcid' => DECIMAL,'LrrRSSI' => DECIMAL,'LrrSNR' => DECIMAL,'SpFact' => DECIMAL,'DevLrrCnt' => DECIMAL,'LrrLAT' => DECIMAL,
+		'LrrLON' => DECIMAL,'Lrr_LrrRSSI' => DECIMAL,'Lrr_LrrSNR' => DECIMAL,'Lrr_Chain' => DECIMAL,'Lrr_LrrESP' => DECIMAL,
+		'Battery_device' => DECIMAL,'Battery_modem' => DECIMAL,	'Vm_t' => DECIMAL, 'Vm_t1' => DECIMAL,
+	);	
 	
 	# modify lora payload_hex
 	$db_fields['lora'] = payload_added($db_fields['lora']);

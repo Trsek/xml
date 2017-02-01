@@ -61,7 +61,13 @@ class MySQLtabledit {
 	
 	# the fields you want to see in "list view"
 	var $fields_in_list_view;
-
+	
+	# operator in where
+	var $def_operators = array('like','=','<>','<=','>=','<','>');
+	
+	# cast for column in where
+	var $field_cast = array();
+	
 	# numbers of rows/records in "list view"
 	var $num_rows_list_view = 15;
 
@@ -199,6 +205,21 @@ class MySQLtabledit {
 	}
 
 
+	####################
+	function cast_field($search_field, $operator, $in_search) {
+	####################
+
+		if( empty($this->field_cast[$search_field])
+		|| (strtolower($operator) == 'like'))
+			return "$search_field $operator '%$in_search%' ";
+		
+		if(( $this->field_cast[$search_field] == DATETIME )
+		|| ( $this->field_cast[$search_field] == DATE )				
+		|| ( $this->field_cast[$search_field] == TIME ))
+			$in_search = "'$in_search'";
+							
+		return "CAST($search_field AS " .$this->field_cast[$search_field] .") $operator $in_search";
+	}
 
 
 	####################
@@ -246,7 +267,11 @@ class MySQLtabledit {
 		// searching
 		if( !empty($_GET['search']) || !empty($_GET['f']))
 			$query_string .= '&search=' . $_GET['search']  . '&f=' . $_GET['f'] ;
-		
+
+		# operator
+		$in_search_operator = addslashes(stripslashes($_GET['op']));
+		if( empty($in_search_operator))
+			$in_search_operator = 'like';
 		
 		# search
 		if ($_GET['search'] && $_GET['f']) {
@@ -258,9 +283,13 @@ class MySQLtabledit {
 				$where_search = "WHERE $in_search_field = '$in_search' ";
 			}
 			else {
-				$where_search = "WHERE $in_search_field LIKE '%$in_search%' ";
+				$where_search = "WHERE " .$this->cast_field($in_search_field, $in_search_operator, $in_search);
 			}
 		}
+
+		# primary where
+		if( !empty($_GET['where']))
+			$where_search = "WHERE ". addslashes(stripslashes($_GET['where']));
 		
 		# select
 		$sql = "SELECT * FROM `$this->table` $where_search $order_by";
@@ -429,12 +458,23 @@ class MySQLtabledit {
 			else {$show_option = $option;}
 
 			if ($option == $in_search_field) {
-					$options .= "<option selected value='$option'>$show_option</option>";
-				}
-				else {
-					$options .= "<option value='$option'>$show_option</option>";
-				}
+				$options .= "<option selected value='$option'>$show_option</option>";
 			}
+			else {
+				$options .= "<option value='$option'>$show_option</option>";
+			}
+		}
+		
+		foreach ($this->def_operators AS $operator) {
+
+			if ($operator == $in_search_operator) {
+				$operators .= "<option selected value='$operator'>$operator</option>";
+			}
+			else {
+				$operators .= "<option value='$operator'>$operator</option>";
+			}
+		}
+
 		$in_search_value = htmlentities(trim(stripslashes($_GET['search'])), ENT_QUOTES);
 
 
@@ -445,6 +485,7 @@ class MySQLtabledit {
 				<td nowrap>
 					<form method=get action='$this->url_script' style='padding: 15px'>
 						<select name='f'>$options</select> 
+						<select name='op'>$operators</select> 
 						<input type='text' name='search' value='$in_search_value' style='width:200px'>
 						<input type='submit' value='{$this->text['Search']}' style='width:80px; border: 1px solid #000'>
 			"; 	
