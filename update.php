@@ -63,15 +63,23 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 							$_POST['Lrr_'.$key] = $value;
 						}
 					}
-					$_POST['mte_new_rec'] = "new";
-					$tabledit->save_rec_directly();
 				}
 			}
-			else {
-				# single store it
-				$_POST['mte_new_rec'] = "new";
-				$tabledit->save_rec_directly();
+
+			# multiple store json
+			if( isset($xml->gws)) {
+				$atts_array = (array) $xml->gws;
+				foreach ($atts_array as $key => $value)
+				{
+					if( in_array($key, $db_fields[$_REQUEST['cm']])) {
+						$_POST[$key] = $value;
+					}
+				}
 			}
+				
+			# single store it
+			$_POST['mte_new_rec'] = "new";
+			$tabledit->save_rec_directly();
 			
 			#
 			$count_update++;
