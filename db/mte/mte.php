@@ -296,7 +296,8 @@ class MySQLtabledit {
 
 		# navigation 2/3
 		//$hits_total = $this->db->query($sql)->fetchColumn(); 
-		$hits_total = count($this->db->query($sql)->fetchAll());
+		//$hits_total = count($this->db->query($sql)->fetchAll());
+		$hits_total = $this->db->query("SELECT COUNT(*) AS db_total FROM `$this->table`")->fetch(PDO::FETCH_ASSOC)['db_total'];
 
 		$sql .= " LIMIT $start, $this->num_rows_list_view";
 		$this->values = $this->db->query($sql);
@@ -794,8 +795,7 @@ class MySQLtabledit {
 		else {
 			$sql = "UPDATE `$this->table` SET $updates WHERE $where LIMIT 1; ";	
 		}
-		$result = $this->db->query($sql);
-		return $result;
+		return $this->db->query($sql);
 	}
 
 	
