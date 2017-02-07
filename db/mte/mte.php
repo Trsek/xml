@@ -261,12 +261,12 @@ class MySQLtabledit {
 			$query_string .= '&start=' . $start;
 
 		// sorting
-		if( !empty($_GET['ad']) || !empty($_GET['sort']))
+		if( isset($_GET['ad']) || isset($_GET['sort']))
 			$query_string .= '&ad=' . $_GET['ad']  . '&sort=' . $_GET['sort'] ;
 
 		// searching
-		if( !empty($_GET['search']) || !empty($_GET['f']))
-			$query_string .= '&search=' . $_GET['search']  . '&f=' . $_GET['f'] ;
+		if( isset($_GET['search']) || isset($_GET['f']))
+			$query_string .= '&search=' . $_GET['search']  . '&op=' . $_GET['op']  . '&f=' . $_GET['f'] ;
 
 		# operator
 		$in_search_operator = addslashes(stripslashes($_GET['op']));
@@ -274,7 +274,7 @@ class MySQLtabledit {
 			$in_search_operator = 'like';
 		
 		# search
-		if ($_GET['search'] && $_GET['f']) {
+		if (isset($_GET['search']) && isset($_GET['f'])) {
 
 			$in_search = addslashes(stripslashes($_GET['search']));
 			$in_search_field = $_GET['f'];
@@ -288,7 +288,7 @@ class MySQLtabledit {
 		}
 
 		# primary where
-		if( !empty($_GET['where']))
+		if( isset($_GET['where']))
 			$where_search = "WHERE ". addslashes(stripslashes($_GET['where']));
 		
 		# select
@@ -492,7 +492,7 @@ class MySQLtabledit {
 		if ($this->query_joomla_component) $seach_form .= "<input type='hidden' value='$this->query_joomla_component' name='option'>";
 		$seach_form .= "</form>";
 		
-		if ($_GET['search'] && $_GET['f']) {		
+		if (isset($_GET['search']) && isset($_GET['f'])) {		
 			if ($this->query_joomla_component) $add_joomla = '?option=' . $this->query_joomla_component;
 			$seach_form .= "<button onclick='window.location=\"$this->url_script$add_joomla\"' style='margin: 0 0 15px 15px; border: 1px solid #000;'>{$this->text['Clear_search']}</button>";
 		}
