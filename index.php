@@ -7,8 +7,9 @@ if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
 	$_GET['start']='0';
 	$_GET['sort']='pm';
 	$_GET['ad']='a';
-	$_GET['search']='';
-	$_GET['f']='';
+	$_GET['search']='10';
+	$_GET['f']='FPort';
+	$_GET['op']='=';
 //	$_GET['mte_a']='edit';
 	$_GET['id']='2';
 }
@@ -80,7 +81,7 @@ $tabledit->database_disconnect();
 
 # bude graf
 if( !empty($_REQUEST['graph']))
-	echo "<div align='center'><img src='graph.php?tbl=".$tbl."&column=".$_REQUEST['graph']."'></div>";
+	echo "<div align='center'><img src='graph.php?tbl=".$tbl."&column=".$_REQUEST['graph']."&graphw=".urlencode($_REQUEST['graphw'])."'></div>";
 
 # autorefresh
 echo '<form method="GET" action="?"><div align="right">

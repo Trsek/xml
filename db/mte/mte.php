@@ -297,7 +297,7 @@ class MySQLtabledit {
 		# navigation 2/3
 		//$hits_total = $this->db->query($sql)->fetchColumn(); 
 		//$hits_total = count($this->db->query($sql)->fetchAll());
-		$hits_total = $this->db->query("SELECT COUNT(*) AS db_total FROM `$this->table`")->fetch(PDO::FETCH_ASSOC)['db_total'];
+		$hits_total = $this->db->query("SELECT COUNT(*) AS db_total FROM `$this->table` $where_search")->fetch(PDO::FETCH_ASSOC)['db_total'];
 
 		$sql .= " LIMIT $start, $this->num_rows_list_view";
 		$this->values = $this->db->query($sql);
@@ -338,7 +338,8 @@ class MySQLtabledit {
 							}
 
 							if (in_array($key, $this->chart_column)) {
-								$sort_image .= "<a href='$this->url_script?$query_string&graph=$key'><IMG SRC='$this->url_base/images/chart.png' BORDER=0 ALT=''></a>";
+								$where_search_html = urlencode($where_search);
+								$sort_image .= "<a href='$this->url_script?$query_string&graph=$key&graphw=$where_search_html'><IMG SRC='$this->url_base/images/chart.png' BORDER=0 ALT=''></a>";
 							}
 
 							// remove sort  and ad and add new ones

@@ -2,8 +2,9 @@
 // volanie napriamo http://localhost:8113/graph.php?tbl=epe&column=tm
 if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
 {
-	$_REQUEST['tbl']='elc';
-	$_REQUEST['column']='pm';
+	$_REQUEST['tbl']='lora';
+	$_REQUEST['column']='Lrr_LrrESP';
+	$_REQUEST['graphw']="WHERE fe like '%2016.11.18%'";	
 }
 
 require_once ("config.php");
@@ -14,9 +15,10 @@ require_once ('jpgraph/jpgraph_bar.php');
 
 $column = $_REQUEST['column'];
 $table = $_REQUEST['tbl'];
+$where = stripslashes($_REQUEST['graphw']);
 
 $db = new PDO('sqlite:'. DB_SLRC_NAME);
-$values = $db->query("SELECT fe, $column FROM $table ORDER BY fe");
+$values = $db->query("SELECT fe, $column FROM $table $where ORDER BY fe");
 
 $ydata = array();
 if (count($values)>0) {
