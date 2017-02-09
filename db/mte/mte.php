@@ -182,8 +182,6 @@ class MySQLtabledit {
 		#run via htaccess
 		if(!empty($url_script)) $this->url_script = $url_script;
 
-		echo "Table: ". $this->table ."<br>";
-		
 		if ($_GET['mte_a'] == 'edit') { 
 			$this->edit_rec(); 
 		}
@@ -295,9 +293,9 @@ class MySQLtabledit {
 		$sql = "SELECT * FROM `$this->table` $where_search $order_by";
 
 		# navigation 2/3
-		//$hits_total = $this->db->query($sql)->fetchColumn(); 
-		//$hits_total = count($this->db->query($sql)->fetchAll());
-		$hits_total = $this->db->query("SELECT COUNT(*) AS db_total FROM `$this->table` $where_search")->fetch(PDO::FETCH_ASSOC)['db_total'];
+		//$this->total_rows = $this->db->query($sql)->fetchColumn(); 
+		//$this->total_rows = count($this->db->query($sql)->fetchAll());
+		$this->total_rows = $this->db->query("SELECT COUNT(*) AS db_total FROM `$this->table` $where_search")->fetch(PDO::FETCH_ASSOC)['db_total'];
 
 		$sql .= " LIMIT $start, $this->num_rows_list_view";
 		$this->values = $this->db->query($sql);
@@ -342,7 +340,7 @@ class MySQLtabledit {
 								$sort_image .= "<a href='$this->url_script?$query_string&graph=$key&graphw=$where_search_html'><IMG SRC='$this->url_base/images/chart.png' BORDER=0 ALT=''></a>";
 							}
 
-							// remove sort  and ad and add new ones
+							// remove sort and add new ones
 							$query_sort = preg_replace('/&(sort|ad)=[^&]*/','', $query_string) . "&sort=$key&ad=$ad";	
 
 							$head .= "<td NOWRAP><a href='$this->url_script?$query_sort' class='mte_head'>$show_key</a> $sort_image</td>";
@@ -378,7 +376,7 @@ class MySQLtabledit {
 
 
 		# last page
-		$last_page = ceil($hits_total/$this->num_rows_list_view);
+		$last_page = ceil($this->total_rows/$this->num_rows_list_view);
 
 
 		# navigatie numbers
@@ -403,7 +401,7 @@ class MySQLtabledit {
 				$navigation .= "<td class='mte_nav' style='background: #fff'><A HREF='$this->url_script?$query_nav&start=$nav_toon$tbl_count'>$f</A></td>"; 
 			}
 		}
-		if ($hits_total<$this->num_rows_list_view) { $navigation = '';}
+		if ($this->total_rows<$this->num_rows_list_view) { $navigation = '';}
 
 
 
@@ -415,7 +413,7 @@ class MySQLtabledit {
 		}
 
 		# Next if: 
-		if ($this_page != $last_page && $hits_total>1) {
+		if ($this_page != $last_page && $this->total_rows>1) {
 			$next =  $start + $this->num_rows_list_view;
 			$next_page_html =  "<A HREF='$this->url_script?$query_nav&start=$next' class='mte_nav_prev_next'>{$this->text['Next']}</A>";
 		}
@@ -428,6 +426,7 @@ class MySQLtabledit {
 						<td style='padding-right:6px;vertical-align: middle'>$last_page_html</td>
 						$navigation
 						<td style='padding-left:6px;vertical-align: middle'>$next_page_html</td>
+						<td style='padding-left:6px;vertical-align: middle'>($this->total_rows)</td>
 					</tr>
 				</table>	
 			";
@@ -854,6 +853,8 @@ class MySQLtabledit {
 	function close_and_print() {
 	##########################
 
+		# title
+		echo "Table: $this->table<br>";
 
 		# debug and warning no htaccess
 		if ($this->debug) $this->debug .= '<br />';
