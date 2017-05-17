@@ -1,4 +1,4 @@
-<?
+<?php
 	require_once("payload_elgas.php");
 
 	# db filename
@@ -64,4 +64,3 @@
 		}
 		return Date("Y.m.d H:i:s", $cdate);
 	}
-?>

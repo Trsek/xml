@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
 {
 //	$_REQUEST['sms'] = "1";
