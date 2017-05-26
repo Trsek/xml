@@ -5,7 +5,7 @@ if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
 {
 //	$_REQUEST['sms'] = "1";
 //	$_REQUEST['reset'] = "1";
-	$_REQUEST['tbl']='lora';
+	$_REQUEST['tbl']='daesung';
 	$_GET['start']='0';
 	$_GET['sort']='pm';
 	$_GET['ad']='a';
@@ -49,7 +49,7 @@ if( isset($_REQUEST['autorefresh'])) {
 }
 
 # tbl define
-$tbl = empty($_REQUEST['tbl'])? "lora": $_REQUEST['tbl']; 
+$tbl = empty($_REQUEST['tbl'])? "daesung": $_REQUEST['tbl']; 
 
 # the fields you want to see in "list view"
 $tabledit->fields_in_list_view = $db_fields[$tbl];
@@ -70,6 +70,7 @@ $tabledit->primary_key = "id";
 $tabledit->fields_required = array("id");
 $tabledit->chart_column = $db_graph;
 $tabledit->field_cast = $db_fields_cast[$tbl];
+$tabledit->insert_button("#", "daesung", "tbl=daesung");
 $tabledit->insert_button("#", "lora", "tbl=lora");
 $tabledit->insert_button("#", "actual (epe)", "tbl=epe");
 $tabledit->insert_button("#", "hourly (elc)", "tbl=elc");

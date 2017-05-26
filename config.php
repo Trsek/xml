@@ -25,9 +25,10 @@
 	$db_fields['rcm']  = array( 'id','ic','es');
 	
 	$db_fields['lora'] = array( 'id','fe','Time','DevEUI','FPort','FCntUp','ADRbit','FCntDn','ack','payload_hex','mic_hex','Lrcid','LrrRSSI','LrrSNR','SpFact','SubBand','Channel','DevLrrCnt','Lrrid','LrrLAT','LrrLON','Lrr_Lrrid','Lrr_LrrRSSI','Lrr_LrrSNR','Lrr_Chain','Lrr_LrrESP','CustomerID','CustomerData','ModelCfg' );
+	$db_fields['daesung'] = array( 'id','arm_id1','arm_id2','user_part','evc','fe','vm','vb','temp','press','c','qb','alarm','fw','period','crc' );
 	
 	$db_time_stamp     = array('fe','fx','fy','tx','ty','dx','sx','sy');
-	$db_graph          = array('vb','vn','db','dn','qb','qn','pm','tm','ct','eb','en','vx','vy','qx','qy','bx','kx','ky','LrrRSSI','LrrSNR','SpFact','Lrrid','LrrLAT','LrrLON','Lrr_Lrrid','Lrr_LrrRSSI','Lrr_LrrSNR','Lrr_Chain','Lrr_LrrESP');
+	$db_graph          = array('vb','vn','db','dn','qb','qn','pm','tm','ct','eb','en','vx','vy','qx','qy','bx','kx','ky','LrrRSSI','LrrSNR','SpFact','Lrrid','LrrLAT','LrrLON','Lrr_Lrrid','Lrr_LrrRSSI','Lrr_LrrSNR','Lrr_Chain','Lrr_LrrESP', 'temp', 'press', 'c');
 
 	# convert json to xml
 	$map_fields        = array( 'ts' => 'Time', 'EUI' => 'DevEUI', 'port' => 'FPort', 'fcnt' => 'FCntUp', 'data' => 'payload_hex', 'rssi' => 'LrrRSSI', 'snr' => 'LrrSNR', 'lat' => 'LrrLAT', 'lon' => 'LrrLON', 'freq' => 'Channel', 'dr' => 'SpFact');
