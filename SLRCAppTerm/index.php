@@ -74,7 +74,7 @@
 	# JSON modification
 	if( isJson($HTTP_RAW_POST_DATA)) {
 		@file_put_contents(str_replace('.xml', '.json', $xml_file), $HTTP_RAW_POST_DATA);
-		$HTTP_RAW_POST_DATA = array2xml(json_decode($HTTP_RAW_POST_DATA));
+		$HTTP_RAW_POST_DATA = array2xml(json_decode($HTTP_RAW_POST_DATA, true));
 	}
 	
 	try {
