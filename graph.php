@@ -21,6 +21,7 @@ $db = new PDO('sqlite:'. DB_SLRC_NAME);
 $values = $db->query("SELECT fe, $column FROM $table $where ORDER BY fe");
 
 $ydata = array();
+$xdata = array();
 if (count($values)>0) {
 	foreach ($values as $rij) {
 		if( is_numeric($rij[$column])) {

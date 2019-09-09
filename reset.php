@@ -8,6 +8,7 @@ $zip = new ZipArchive();
 $zip->open(dirname(DB_SLRC_NAME) ."/". Date("Ymd") .".zip", ZIPARCHIVE::CREATE);
 
 # xml files
+$files = [];
 if ($handle = opendir(dirname(DB_SLRC_NAME)))
 {
 	while (false !== ($file = readdir($handle)))

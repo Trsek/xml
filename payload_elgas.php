@@ -1,19 +1,19 @@
 <?php
 # special payload parser for Elgas
 
-	define(tUchar,   0);
-	define(tUlong,   1);
-	define(tDouble,  2);
-	define(tUshort,  3);
-	define(tString,  4);
-	define(tHex,     5);
-	define(tPercent, 6);
+	define('tUchar',   0);
+	define('tUlong',   1);
+	define('tDouble',  2);
+	define('tUshort',  3);
+	define('tString',  4);
+	define('tHex',     5);
+	define('tPercent', 6);
 	
-	define(PAY_NAME, 0);
-	define(PAY_LEN,  1);
-	define(PAY_TYPE, 2);
+	define('PAY_NAME', 0);
+	define('PAY_LEN',  1);
+	define('PAY_TYPE', 2);
 
-	define(DATEOFFSET1970, 946684800);
+	define('DATEOFFSET1970', 946684800);
 
 	$payload_elgas = array(
 		array('Message_Type',   1, tUchar),
@@ -35,7 +35,7 @@ function payload_added($fields)
 	global $payload_elgas;
 
 	$inserted = false;
-	empty($fields_answer);
+	$fields_answer = [];
 
 	foreach($fields as $column)
 	{
@@ -75,7 +75,7 @@ function payload_elgas($pay_value)
 {
 	global $payload_elgas;
 
-	empty($value);
+	$value = [];
 	foreach($payload_elgas as $pay)
 	{
 		# not more

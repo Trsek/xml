@@ -2,9 +2,9 @@
 	require_once("payload_elgas.php");
 
 	# db filename
-	define(DB_NAME,      "data/xmldata.sqlite");
-	define(DB_SLRC_NAME, "SLRCAppTerm/data/xmldata.sqlite");
-	define(WEB_DISABLE_RESET, "sekerak.eu");
+	define('DB_NAME',      "data/xmldata.sqlite");
+	define('DB_SLRC_NAME', "SLRCAppTerm/data/xmldata.sqlite");
+	define('WEB_DISABLE_RESET', "sekerak.eu");
 
 	date_default_timezone_set('Europe/Prague');
 	
@@ -36,10 +36,10 @@
 	# cast for sql where
 	$db_fields_cast['lora'] = array( 
 	//	'fe' => DATETIME,'Time' => DATETIME, 'TimeStamp' => DATETIME,
-		'FPort' => DECIMAL,'FCntUp' => DECIMAL,'ADRbit' => DECIMAL,'FCntDn' => DECIMAL,'Message_Type' => DECIMAL,
-		'Lrcid' => DECIMAL,'LrrRSSI' => DECIMAL,'LrrSNR' => DECIMAL,'SpFact' => DECIMAL,'DevLrrCnt' => DECIMAL,'LrrLAT' => DECIMAL,
-		'LrrLON' => DECIMAL,'Lrr_LrrRSSI' => DECIMAL,'Lrr_LrrSNR' => DECIMAL,'Lrr_Chain' => DECIMAL,'Lrr_LrrESP' => DECIMAL,
-		'Battery_device' => DECIMAL,'Battery_modem' => DECIMAL,	'Vm_t' => DECIMAL, 'Vm_t1' => DECIMAL,
+		'FPort' => 'DECIMAL','FCntUp' => 'DECIMAL','ADRbit' => 'DECIMAL','FCntDn' => 'DECIMAL','Message_Type' => 'DECIMAL',
+		'Lrcid' => 'DECIMAL','LrrRSSI' => 'DECIMAL','LrrSNR' => 'DECIMAL','SpFact' => 'DECIMAL','DevLrrCnt' => 'DECIMAL','LrrLAT' => 'DECIMAL',
+		'LrrLON' => 'DECIMAL','Lrr_LrrRSSI' => 'DECIMAL','Lrr_LrrSNR' => 'DECIMAL','Lrr_Chain' => 'DECIMAL','Lrr_LrrESP' => 'DECIMAL',
+		'Battery_device' => 'DECIMAL','Battery_modem' => 'DECIMAL',	'Vm_t' => 'DECIMAL', 'Vm_t1' => 'DECIMAL',
 	);	
 	
 	# modify lora payload_hex
