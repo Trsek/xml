@@ -38,4 +38,3 @@ function array2xml($array, $xml = false)
 
 	return $xml->asXML();
 }
-?>

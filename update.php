@@ -1,4 +1,4 @@
-<?
+<?php
 require_once("config.php");
 require_once("db/mte/mte.php");
 
@@ -91,5 +91,3 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 $tabledit->database_disconnect();
 
 echo "Updated SQL from $count_update xml files.<br>";
-
-?>

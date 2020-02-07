@@ -1,4 +1,4 @@
-<?
+<?php
 // volanie napriamo http://localhost:8113/graph.php?tbl=epe&column=tm
 if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
 {
@@ -47,5 +47,3 @@ $graph->yaxis->title->Set($column);
 $lineplot=new LinePlot($ydata);
 $graph->Add($lineplot);
 $graph->Stroke();
-
-?>

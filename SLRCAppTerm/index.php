@@ -1,4 +1,4 @@
-<?
+<?php
 	if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
 	{
 //		$_REQUEST["cm" ] = "etl";
@@ -160,4 +160,3 @@
 	$tabledit->save_rec_directly();
 	
 	$tabledit->database_disconnect();
-?>

@@ -1,4 +1,4 @@
-<?
+<?php
 require_once("config.php");
 require_once("db/mte/mte.php");
 
@@ -46,4 +46,3 @@ function sort_tables()
 	}
 	$db = null;
 }
-?>

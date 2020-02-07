@@ -1,4 +1,4 @@
-<?
+<?php
 require_once("config.php");
 require_once("db/mte/mte.php");
 
@@ -58,5 +58,3 @@ foreach ($db_fields as $db_tbl_name => $db_tbl_column)
 	$db->exec($sql);
 }
 $db = null;
-
-?>
