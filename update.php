@@ -18,7 +18,7 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 				$xml = @new SimpleXMLElement(dirname(DB_SLRC_NAME) .'/' .$file, LIBXML_COMPACT, TRUE);
 			}
 			catch(Exception $e) {
-				continue;					
+				continue;
 			}
 			# normallize xml attributes
 			$atts_array = (array) $xml->attributes();
@@ -33,7 +33,7 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 				foreach(payload_elgas($atts_array['payload_hex']) as $payload_key => $payload_value)
 					$atts_array[$payload_key] = $payload_value;
 			}
-				
+
 			# add to post
 			$_POST = null;
 			foreach ($db_fields[$_REQUEST['cm']] as $key)
@@ -43,7 +43,7 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 
 				if( $key == 'Time')
 					$_POST['fe'] = modify_lora_date($atts_array[$key]);
-				
+
 				if( $key != 'id')
 					$_POST[$key] = $atts_array[$key];
 			}
@@ -51,7 +51,7 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 			# database settings:
 			$tabledit->database_connect_quick(DB_SLRC_NAME, $_REQUEST['cm']);
 			$tabledit->primary_key = "id";
-			
+
 			# multiple store
 			if( $xml->DevLrrCnt > 0 ) {
 				for($i=0; $i<$xml->DevLrrCnt; $i++)
@@ -76,7 +76,7 @@ if ($handle = opendir(dirname(DB_SLRC_NAME)))
 					}
 				}
 			}
-				
+
 			# single store it
 			$_POST['mte_new_rec'] = "new";
 			$tabledit->save_rec_directly();
