@@ -50,8 +50,8 @@
 // Note: The default setting is to create a subdirectory in the
 // directory from where the image script is executed and store all files
 // there. As ususal this directory must be writeable by the PHP process.
-define('CSIMCACHE_DIR','cache/');
-define('CSIMCACHE_HTTP_DIR','cache/');
+define('CSIMCACHE_DIR','csimcache/');
+define('CSIMCACHE_HTTP_DIR','csimcache/');
 
 //------------------------------------------------------------------------
 // Various JpGraph Settings. Adjust accordingly to your

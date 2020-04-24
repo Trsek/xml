@@ -4,7 +4,10 @@ if(IsSet($_REQUEST["XDEBUG_SESSION_START"]))
 {
 	$_REQUEST['tbl']='lora';
 	$_REQUEST['column']='Lrr_LrrESP';
-	$_REQUEST['graphw']="WHERE fe like '%2016.11.18%'";	
+	$_REQUEST['graphw']="WHERE fe like '%2016.11.18%'";
+	$_REQUEST['tbl']='epe';
+	$_REQUEST['column']='vn';
+	$_REQUEST['graphw']="";
 }
 
 require_once ("config.php");
@@ -22,7 +25,7 @@ $values = $db->query("SELECT fe, $column FROM $table $where ORDER BY fe");
 
 $ydata = array();
 $xdata = array();
-if (count($values)>0) {
+if ($values!=false) {
 	foreach ($values as $rij) {
 		if( is_numeric($rij[$column])) {
 			$xdata[] = $rij['fe'];
