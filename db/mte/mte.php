@@ -302,7 +302,7 @@ class MySQLtabledit {
 		if( $this->values == false )
 			$this->values = null;
 
-		if (count($this->values)>0) {
+			if ($this->values != null) {
 			$count = 0;
 			foreach ($this->values as $rij) {
 				$count++;
@@ -485,6 +485,7 @@ class MySQLtabledit {
 			<tr>
 				<td nowrap>
 					<form method=get action='$this->url_script' style='padding: 15px'>
+						<input type='hidden' name='tbl' value='$this->table'>
 						<select name='f'>$options</select> 
 						<select name='op'>$operators</select> 
 						<input type='text' name='search' value='$in_search_value' style='width:200px'>
