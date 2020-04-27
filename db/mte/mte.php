@@ -767,6 +767,8 @@ class MySQLtabledit {
 		$in_mte_new_rec = $_POST['mte_new_rec'];
 		
 		$updates = '';
+		$insert_fields = '';
+		$insert_values = '';
 		
 		foreach($_POST AS $key => $value) {
 			if ($key == $this->primary_key) {

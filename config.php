@@ -49,7 +49,7 @@
 	# convert date to human format
 	function modify_date($fe)
 	{
-		$cdate = mktime(substr($fe,5,2), substr($fe,7,2), 0, 1, 1, 2000+substr($fe,0,2), 0) + (substr($fe,2,3)-1)*24*60*60;
+		$cdate = mktime(substr($fe,5,2), substr($fe,7,2), 0, 1, 1, 2000+substr($fe,0,2)) + (substr($fe,2,3)-1)*24*60*60;
 		return Date("Y.m.d H:i", $cdate);
 	}
 	
