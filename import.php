@@ -199,4 +199,4 @@ sort_tables();
 
 echo "Updated SQL of $count_update SMS from file ". $_FILES['xmlfile']['name'] .".<br>";
 if( $count_bad )
-	echo "Mistake in '$count_bad' SMS's.<br>"
+	echo "Mistake in '$count_bad' SMS's.<br>";
